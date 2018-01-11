@@ -7,23 +7,31 @@
 #include <stdlib.h>
 
 int next_prime (int number);
-// If input <= 47, test_n and test_d is assigned but
-// does not enter the while loop meaning isdigit(number)
-// returns false. However,
+// takes in integer, returns if prime, else return 
+// next prime
 
 int prime_detect (int number);
+// takes in integer, if number is prime, return number
 
-/*
+
+// make error message for wrong input
 int main (int argc, char* argv[]) {
-	if (isdigit(argv[1])){;
+/*
+	if (isdigit(argv[1])){
 		int number = atoi(argv[1]);
 		int next_prime_number = next_prime(number);
 		return 1;
 	}
+*/
+	char* input_ptr;
+	int test_int;
+	test_int = strtol(argv[1], &input_ptr, 10);
+	printf("%d\n", test_int);
+	int next_prime_number = next_prime(test_int);
 	return 0;
 }
-*/
 
+/*
 // for testing 
 int main (void) {
 	int number = 1;
@@ -33,40 +41,33 @@ int main (void) {
 		number++;
 //		printf("main check: %d\n", next_prime_number);
 	}
-
 }
+*/
 
 int next_prime (int number){
 	int test_n = number;
 	int test_d = number-1;
-//	printf("test_n and test_d\n");
-
 
 	if (number == 1) {
 		printf("%d\n", number);
-//		printf("if number == 1\n");
 		return number;
 	}
 
-
 	while (number > 0){
-//		printf("entered while loop\n");
-		// if divisible and divisor > 1, not prime number
+
+// if divisible and divisor > 1, not prime number
 		if (test_n%test_d == 0 && test_d > 1){
 			test_n++;
 			test_d = test_n-1;
-//			printf("A1\n");
 		}
-		// if divisible and divisor == 1, prime number
+// if divisible and divisor == 1, prime number
 		else if(test_n%test_d == 0 && test_d == 1) {
 			printf("%d\n", test_n);
-//			printf("A2\n");
 			return test_n;
 		}
-		// if not divisible, try reduce denominator by 1
+// if not divisible, reduce denominator every iteration
 		else {
 			test_d--;
-//			printf("A3\n");
 		}
 	}
 }
@@ -74,19 +75,31 @@ int next_prime (int number){
 int prime_detect (int number) {
 	int test_n = number;
 	int test_d = number-1;
-
-	while (isdigit(number)) {
+// if number is 1, then denominator cannot be 0
+// we know 1 == prime to be true
+	if (number == 1) {
+		printf("%d\n", number);
+		return number;
+	}
+// if number is positive integer larger than 0 and is not 1
+// use while loop to attempt to divide by integers (1, number-1)
+	while (number > 0) {
+// if divisible and divisor > 1, not a prime number 
 		if (test_n%test_d == 0 && test_d > 1){
 			test_n++;
 			test_d = test_n-1;
 		}
+// if divisable and divisor == 1 and test_n is unchanged, number is prime
 		else if (test_n%test_d == 0 && test_d == 1 && test_n == number) {
 			printf("%d\n", test_n);
 			return test_n;
 		}
+// if divisable and divisor == 1 and test_n is changed, test_n is prime
+// but number is not prime
 		else if (test_n%test_d == 0 && test_d == 1 && test_n != number) {
 			return test_n;
 		}
+// if not divisible, reduce denominator every iteration
 		else {
 			test_d--;
 		}
