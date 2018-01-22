@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 int next_prime (int number);
 // takes in integer, returns if prime, else return 
@@ -13,16 +14,11 @@ int next_prime (int number);
 int prime_detect (int number);
 // takes in integer, if number is prime, return number
 
+int even_detect (int number);
+// detects if the number is even (not prime)
 
 // make error message for wrong input
 int main (int argc, char* argv[]) {
-/*
-	if (isdigit(argv[1])){
-		int number = atoi(argv[1]);
-		int next_prime_number = next_prime(number);
-		return 1;
-	}
-*/
 	char* input_ptr;
 	int test_int;
 	test_int = strtol(argv[1], &input_ptr, 10);
@@ -33,7 +29,7 @@ int main (int argc, char* argv[]) {
 
 /*
 // for testing 
-int main (void) {
+int main (void) {f
 	int number = 1;
 	while (number < 99999){
 		int next_prime_number = next_prime(number);
@@ -45,6 +41,10 @@ int main (void) {
 */
 
 int next_prime (int number){
+
+	int TRUE;
+	int FALSE;
+
 	int test_n = number;
 	int test_d = number-1;
 
@@ -54,9 +54,12 @@ int next_prime (int number){
 	}
 
 	while (number > 0){
-
+// if number is even, will not be prime
+		if (even_detect(test_n) == TRUE){
+			test_n++;
+		}
 // if divisible and divisor > 1, not prime number
-		if (test_n%test_d == 0 && test_d > 1){
+		else if (test_n%test_d == 0 && test_d > 1){
 			test_n++;
 			test_d = test_n-1;
 		}
@@ -104,4 +107,13 @@ int prime_detect (int number) {
 			test_d--;
 		}
 	}
+}
+
+int even_detect (int number){
+	int TRUE;
+	int FALSE;
+	if (number%2 == 0){
+		return TRUE;
+	}
+	return FALSE;
 }
